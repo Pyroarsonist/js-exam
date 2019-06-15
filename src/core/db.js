@@ -1,4 +1,5 @@
 import admin from 'firebase-admin';
+// eslint-disable-next-line import/no-unresolved
 import serviceAccount from '../../serviceAccountKey';
 
 // eslint-disable-next-line import/no-mutable-exports
