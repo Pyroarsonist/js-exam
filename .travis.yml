@@ -4,7 +4,8 @@ node_js:
 cache:
   - npm
 script:
-  - npm run lint
+  - yarn lint
+  - yarn build
 deploy:
   provider: firebase
   token:
