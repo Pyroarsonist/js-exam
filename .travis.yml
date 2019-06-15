@@ -8,7 +8,7 @@ before_script:
 script:
   - yarn lint
   - yarn build
-  - yarn serve
+  - yarn serve &
 deploy:
   provider: firebase
   token:
