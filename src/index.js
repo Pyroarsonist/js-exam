@@ -20,4 +20,8 @@ const promise = initDB()
 
 promise.then(() => {
   console.info('Server started');
+
+  setInterval(() => {
+    console.info('ping'); // for firebase
+  }, 10000);
 });
