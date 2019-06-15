@@ -3,8 +3,9 @@ node_js:
   - "12.4.0"
 cache:
   - npm
-before_script:
-  - npm install firebase-tools -g
 script:
   - npm run lint
-  - firebase deploy --only hosting --token $FIREBASE_TOKEN
+deploy:
+  provider: firebase
+  token:
+    secure: $FIREBASE_TOKEN
