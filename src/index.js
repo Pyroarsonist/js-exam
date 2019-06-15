@@ -19,5 +19,5 @@ const promise = initDB()
   .catch(err => debug(err.stack));
 
 promise.then(() => {
-  // init server
+  console.info('Server started');
 });
