@@ -78,4 +78,4 @@ typings/
 # builded server files
 dist
 
-serviceAccountKey.json
+#serviceAccountKey.json
