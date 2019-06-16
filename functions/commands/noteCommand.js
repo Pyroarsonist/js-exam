@@ -6,13 +6,11 @@ let db = null;
 const menu = new TelegrafInlineMenu('Редактор записок');
 const replyMiddleware = menu.replyMenuMiddleware();
 
-const separator = 'xpyrox';
-
 const subMenu = new TelegrafInlineMenu(() => 'Выберите, что делать с запиской');
 
 subMenu.simpleButton('Удалить', 'del', {
   doFunc: async ctx => {
-    const id = ctx.match[1].split(separator)[0];
+    const id = ctx.match[1];
     await db
       .collection('notes')
       .doc(id)
@@ -34,16 +32,18 @@ menu.selectSubmenu(
       if (x) {
         const data = x.data();
         notes.push({
-          text: [x.id, x.data().text].join(separator),
+          id: x.id,
+          text: data.text,
           createdAt: data.createdAt,
         });
       }
     });
-    return _.sortBy(notes, 'createdAt').map(x => x.text);
+    ctx.notes = notes;
+    return _.sortBy(notes, 'createdAt').map(x => x.id);
   },
   subMenu,
   {
-    textFunc: (_ctx, note) => note.split(separator)[1],
+    textFunc: (ctx, id) => ctx.notes.find(n => n.id === id).text,
     columns: 4,
   },
 );
