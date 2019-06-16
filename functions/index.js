@@ -18,7 +18,7 @@ const db = admin.firestore();
 
 commands(bot, db);
 
-bot.startPolling();
+if (process.env.TELEGRAM_BOT_TOKEN) bot.startPolling();
 
 exports.bot = functions.https.onRequest(async (req, res) => {
   try {
