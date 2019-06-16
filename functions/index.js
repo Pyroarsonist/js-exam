@@ -20,10 +20,8 @@ commands(bot, db);
 
 if (process.env.TELEGRAM_BOT_TOKEN) bot.startPolling();
 
-exports.bot = functions.https.onRequest(async (req, res) => {
-  try {
-    await bot.handleUpdate(req.body, res);
-  } catch (e) {
-    console.error(e);
-  }
-});
+exports.bot = functions.https.onRequest(async (req, res) =>
+  bot.handleUpdate(req.body, res),
+);
+
+console.info('Telegram bot started');
