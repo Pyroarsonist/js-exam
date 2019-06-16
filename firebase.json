@@ -1,10 +1,19 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "/",
+    "rewrites": [
+      {
+        "source": "/bot/**",
+        "function": "bot"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

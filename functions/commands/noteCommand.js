@@ -1,8 +1,11 @@
-import TelegrafInlineMenu from 'telegraf-inline-menu';
-import { db } from 'core/db';
+const TelegrafInlineMenu = require('telegraf-inline-menu');
+
+let db = null;
 
 const menu = new TelegrafInlineMenu('Редактор записок');
 const replyMiddleware = menu.replyMenuMiddleware();
+
+const separator = ':pyro:'
 
 const subMenu = new TelegrafInlineMenu(() => 'Выберите, что делать с запиской');
 // subMenu.simpleButton('Редактировать', 'edit', {
@@ -30,7 +33,7 @@ const subMenu = new TelegrafInlineMenu(() => 'Выберите, что дела�
 
 subMenu.simpleButton('Удалить', 'del', {
   doFunc: async ctx => {
-    const text = ctx.match[1];
+    const id = ctx.match[1].split(separator)[0]
     const w = await db
       .collection('notes')
       .where('text', '==', text)
@@ -58,13 +61,13 @@ menu.selectSubmenu(
       .get();
     notesQuery.forEach(x => {
       // if (x) notes.push({ ...x.data(), id: x.id });
-      if (x) notes.push(x.data().text);
+      if (x) notes.push([x.id,x.data().text].join(separator));
     });
     return notes;
   },
   subMenu,
   {
-    // textFunc: (_ctx, note) => note.text,
+    textFunc: (_ctx, note) => note.split(separator)[1],
     columns: 4,
   },
 );
@@ -81,7 +84,8 @@ menu.question('Добавить записку', 'add', {
 
 menu.setCommand('start');
 
-export default bot => {
+exports.default = (bot, database) => {
+  db = database;
   bot.use(
     menu.init({
       backButtonText: 'Назад',
