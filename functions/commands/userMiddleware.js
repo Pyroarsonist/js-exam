@@ -1,5 +1,4 @@
 exports.default = async (db, ctx, next) => {
-  const collection = db.collection('users');
   const { id, first_name, is_bot, last_name, username } = ctx.from;
   const userData = {
     telegramId: id,
@@ -9,7 +8,7 @@ exports.default = async (db, ctx, next) => {
     userName: username || null,
   };
 
-  const user = await collection.doc(`${id}`);
+  const user = await db.collection('users').doc(`${id}`);
   await user.update(userData, { merge: true });
   ctx.user = userData;
 

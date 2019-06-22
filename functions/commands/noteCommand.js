@@ -59,7 +59,7 @@ menu.question('Добавить записку', 'add', {
   },
 });
 
-menu.setCommand('start');
+menu.setCommand('notes');
 
 exports.default = (bot, database) => {
   db = database;
